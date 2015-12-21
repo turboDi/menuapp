@@ -1,6 +1,7 @@
 package org.turbodi.menuapp.data.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.turbodi.menuapp.data.model.Restaurant;
 import org.turbodi.menuapp.data.model.User;
 
 /**
@@ -10,4 +11,6 @@ import org.turbodi.menuapp.data.model.User;
 public interface UserDao extends JpaRepository<User, Long> {
 
     User findByUsername(String username);
+
+    long countByVotedFor(Restaurant vote);
 }

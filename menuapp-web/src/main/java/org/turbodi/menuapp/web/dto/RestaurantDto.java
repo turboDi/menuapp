@@ -19,5 +19,5 @@ public class RestaurantDto {
 
     private boolean deleted;
 
-    private int votes;
+    private long votes;
 }

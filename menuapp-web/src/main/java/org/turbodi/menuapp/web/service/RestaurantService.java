@@ -24,26 +24,26 @@ public class RestaurantService extends RestaurantToDtoAware {
 
     @Transactional(readOnly = true)
     public List<RestaurantDto> findAll() {
-        return Lists.transform(restaurantDao.findAll(), toDto());
+        return Lists.transform(restaurantDao.findAllOrderByVotes(), TO_DTO);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     public RestaurantDto create(RestaurantDto dto) {
         Restaurant restaurant = new Restaurant();
         restaurant.setName(dto.getName());
-        return toDto().apply(restaurantDao.save(restaurant));
+        return TO_DTO.apply(restaurantDao.save(restaurant));
     }
 
     @Transactional(readOnly = true)
     public RestaurantDto findOne(Long id) {
-        return toDto().apply(restaurantDao.findOne(id));
+        return toDtoCountRefresh(restaurantDao.findOne(id));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     public RestaurantDto update(Long id, RestaurantDto dto) {
         Restaurant restaurant = restaurantDao.findOne(id);
         restaurant.setName(dto.getName());
-        return toDto().apply(restaurantDao.save(restaurant));
+        return toDtoCountRefresh(restaurantDao.save(restaurant));
     }
 
     @PreAuthorize("hasRole('ADMIN')")

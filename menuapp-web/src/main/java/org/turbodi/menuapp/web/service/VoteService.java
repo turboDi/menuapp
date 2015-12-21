@@ -8,7 +8,6 @@ import org.turbodi.menuapp.data.dao.RestaurantDao;
 import org.turbodi.menuapp.data.dao.UserDao;
 import org.turbodi.menuapp.data.model.Restaurant;
 import org.turbodi.menuapp.data.model.User;
-import org.turbodi.menuapp.data.model.Vote;
 import org.turbodi.menuapp.web.dto.RestaurantDto;
 
 import java.time.LocalTime;
@@ -30,16 +29,12 @@ public class VoteService extends RestaurantToDtoAware {
     @Transactional
     public RestaurantDto vote(Long restaurantId, User user) {
         Restaurant restaurant = restaurantDao.findOne(restaurantId);
-        Vote vote = user.getVote();
-        if (vote == null) {
-            user.setVote(vote = new Vote());
-        }
-        vote.setRestaurant(restaurant);
+        user.setVotedFor(restaurant);
         userDao.save(user);
-        return toDto().apply(restaurant);
+        return toDtoCountRefresh(restaurant);
     }
 
     public boolean canVote(User user) {
-        return user.getVote() == null || LocalTime.now().isBefore(LocalTime.of(11, 0));
+        return user.getVotedFor() == null || LocalTime.now().isBefore(LocalTime.of(11, 0));
     }
 }

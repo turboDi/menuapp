@@ -30,7 +30,7 @@ API protected with `Basic Authentication`. There are two default users in databa
 
 ###Restaurants
 
-**Retrieve** restaurants with their votes:
+**Retrieve** restaurants with their votes (ordered by votes count):
 
     curl --user user:123 http://localhost:8080/restaurants
 

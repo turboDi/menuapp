@@ -51,11 +51,6 @@ public class ControllerTestConfig {
     }
 
     @Bean
-    public VoteDao voteDao() {
-        return mock(VoteDao.class);
-    }
-
-    @Bean
     public RestaurantDao restaurantDao() {
         return mock(RestaurantDao.class);
     }
