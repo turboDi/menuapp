@@ -30,8 +30,4 @@ public abstract class AbstractController {
         return ResponseEntity.notFound().build();
     }
 
-    @ExceptionHandler
-    public ResponseEntity<String> onVoteException(VoteException e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
-    }
 }

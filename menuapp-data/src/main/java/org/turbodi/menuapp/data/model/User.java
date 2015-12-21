@@ -24,8 +24,8 @@ public class User implements Serializable {
     @Column(nullable = false)
     private String password;
 
-    @ManyToOne
-    private Restaurant votedFor;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Vote vote;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

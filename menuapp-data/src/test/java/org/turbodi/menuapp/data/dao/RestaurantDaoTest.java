@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 import org.turbodi.menuapp.data.model.Restaurant;
 import org.turbodi.menuapp.data.model.User;
+import org.turbodi.menuapp.data.model.Vote;
 
 import java.util.Arrays;
 
@@ -22,8 +23,8 @@ public class RestaurantDaoTest extends AbstractPersistenceTest<RestaurantDao> {
 
     @Override
     protected void after() {
-        user1.setVotedFor(null);
-        user2.setVotedFor(null);
+        user1.setVote(null);
+        user2.setVote(null);
         userDao.save(Arrays.asList(user1, user2));
     }
 
@@ -36,7 +37,7 @@ public class RestaurantDaoTest extends AbstractPersistenceTest<RestaurantDao> {
     }
 
     private void vote(User user, Restaurant restaurant) {
-        user.setVotedFor(restaurant);
+        user.setVote(new Vote(restaurant));
         userDao.save(user);
     }
 }

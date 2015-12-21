@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -27,8 +28,8 @@ public class Restaurant implements Serializable {
 
     private boolean deleted;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "votedFor")
-    private Set<User> votes;
+    @OneToMany(mappedBy = "restaurant")
+    private Set<Vote> votes = new HashSet<>(0);
 
     @Transient
     private long votesCount;

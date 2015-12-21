@@ -11,6 +11,4 @@ import org.turbodi.menuapp.data.model.User;
 public interface UserDao extends JpaRepository<User, Long> {
 
     User findByUsername(String username);
-
-    long countByVotedFor(Restaurant vote);
 }

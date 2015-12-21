@@ -1,5 +1,6 @@
 package org.turbodi.menuapp.web.service;
 
+import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,7 +20,14 @@ import static org.turbodi.menuapp.web.service.Checkers.nonNull;
  */
 @Service
 @Transactional
-public class RestaurantService extends RestaurantToDtoAware {
+public class RestaurantService {
+
+    private static Function<Restaurant, RestaurantDto> TO_DTO = r -> new RestaurantDto(r.getId(), r.getName(), r.isDeleted(), r.getVotesCount());
+
+    static Function<Restaurant, RestaurantDto> TO_DTO_COUNT_REFRESH = r -> {
+        nonNull(r).setVotesCount(r.getVotes().size());
+        return TO_DTO.apply(r);
+    };
 
     @Autowired
     private RestaurantDao restaurantDao;
@@ -38,14 +46,14 @@ public class RestaurantService extends RestaurantToDtoAware {
 
     @Transactional(readOnly = true)
     public RestaurantDto findOne(Long id) {
-        return toDtoCountRefresh(nonNull(restaurantDao.findOne(id)));
+        return TO_DTO_COUNT_REFRESH.apply(nonNull(restaurantDao.findOne(id)));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     public RestaurantDto update(Long id, RestaurantDto dto) {
         Restaurant restaurant = nonNull(restaurantDao.findOne(id));
         restaurant.setName(dto.getName());
-        return toDtoCountRefresh(restaurantDao.save(restaurant));
+        return TO_DTO_COUNT_REFRESH.apply(restaurantDao.save(restaurant));
     }
 
     @PreAuthorize("hasRole('ADMIN')")

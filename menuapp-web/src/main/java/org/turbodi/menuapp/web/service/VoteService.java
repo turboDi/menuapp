@@ -8,7 +8,8 @@ import org.turbodi.menuapp.data.dao.RestaurantDao;
 import org.turbodi.menuapp.data.dao.UserDao;
 import org.turbodi.menuapp.data.model.Restaurant;
 import org.turbodi.menuapp.data.model.User;
-import org.turbodi.menuapp.web.dto.RestaurantDto;
+import org.turbodi.menuapp.data.model.Vote;
+import org.turbodi.menuapp.web.dto.VoteDto;
 
 import java.time.LocalTime;
 
@@ -20,7 +21,7 @@ import static org.turbodi.menuapp.web.service.Checkers.nonNull;
  */
 @PreAuthorize("hasRole('USER')")
 @Service
-public class VoteService extends RestaurantToDtoAware {
+public class VoteService {
 
     @Autowired
     private RestaurantDao restaurantDao;
@@ -29,14 +30,19 @@ public class VoteService extends RestaurantToDtoAware {
     private UserDao userDao;
 
     @Transactional
-    public RestaurantDto vote(Long restaurantId, User user) {
+    public VoteDto vote(Long restaurantId, User user) {
         Restaurant restaurant = nonNull(restaurantDao.findOne(restaurantId));
-        user.setVotedFor(restaurant);
+        Vote vote = user.getVote();
+        if (vote == null) {
+            user.setVote(vote = new Vote());
+        }
+        vote.setRestaurant(restaurant);
+        restaurant.getVotes().add(vote);
         userDao.save(user);
-        return toDtoCountRefresh(restaurant);
+        return new VoteDto(RestaurantService.TO_DTO_COUNT_REFRESH.apply(restaurant));
     }
 
     public boolean canVote(User user) {
-        return user.getVotedFor() == null || LocalTime.now().isBefore(LocalTime.of(11, 0));
+        return user.getVote() == null || LocalTime.now().isBefore(LocalTime.of(11, 0));
     }
 }

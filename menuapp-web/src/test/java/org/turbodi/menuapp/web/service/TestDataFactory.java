@@ -3,10 +3,7 @@ package org.turbodi.menuapp.web.service;
 import org.turbodi.menuapp.data.model.Dish;
 import org.turbodi.menuapp.data.model.Menu;
 import org.turbodi.menuapp.data.model.Restaurant;
-import org.turbodi.menuapp.web.dto.DishDto;
-import org.turbodi.menuapp.web.dto.MenuDto;
-import org.turbodi.menuapp.web.dto.RestaurantDto;
-import org.turbodi.menuapp.web.dto.UserDto;
+import org.turbodi.menuapp.web.dto.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -45,6 +42,10 @@ public class TestDataFactory {
 
     public static RestaurantDto restaurantDto(String name) {
         return new RestaurantDto(null, name, false, 0);
+    }
+
+    public static VoteDto voteDto(String restaurant) {
+        return new VoteDto(restaurantDto(restaurant));
     }
 
     public static MenuDto menuDto(Date date, String... dishes) {

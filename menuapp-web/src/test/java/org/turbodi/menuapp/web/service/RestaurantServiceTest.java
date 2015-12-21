@@ -6,7 +6,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.turbodi.menuapp.data.dao.RestaurantDao;
-import org.turbodi.menuapp.data.dao.UserDao;
 import org.turbodi.menuapp.data.model.Restaurant;
 
 import static org.junit.Assert.assertEquals;
@@ -26,9 +25,6 @@ public class RestaurantServiceTest {
     @Mock
     private RestaurantDao restaurantDao;
 
-    @Mock
-    private UserDao userDao;
-
     @InjectMocks
     private RestaurantService restaurantService;
 
@@ -36,7 +32,6 @@ public class RestaurantServiceTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         when(restaurantDao.save(any(Restaurant.class))).then(returnsFirstArg());
-        when(userDao.countByVotedFor(any())).thenReturn(0L);
         when(restaurantDao.findOne(any())).thenReturn(
                 restaurant("restaurant")
         );
