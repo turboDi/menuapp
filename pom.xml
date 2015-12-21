@@ -7,7 +7,7 @@
     <groupId>org.turbodi.menuapp</groupId>
     <artifactId>menuapp</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
 
     <modules>
         <module>menuapp-data</module>
