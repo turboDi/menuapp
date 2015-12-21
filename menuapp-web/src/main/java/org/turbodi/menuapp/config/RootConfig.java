@@ -1,9 +1,6 @@
 package org.turbodi.menuapp.config;
 
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.turbodi.menuapp.data.PersistenceConfig;
 
 /**
@@ -13,6 +10,18 @@ import org.turbodi.menuapp.data.PersistenceConfig;
 @Configuration
 @Import({SecurityConfig.class, PersistenceConfig.class})
 @ComponentScan("org.turbodi.menuapp.web.service")
-@PropertySource("classpath:application.properties")
 public class RootConfig {
+
+    @Configuration
+    @Profile("default")
+    @PropertySource("classpath:application.properties")
+    public static class PostgreSQLConfiguration {
+    }
+
+    @Configuration
+    @Profile("h2")
+    @PropertySource("classpath:application-h2.properties")
+    public static class H2Configuration {
+    }
+
 }

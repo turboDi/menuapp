@@ -18,6 +18,13 @@ This is a voting system for deciding where to have lunch.
 
 Launch menuapp-web\target\menuapp-web-0.0.1-SNAPSHOT.war using your app server (I've used tomcat 8.0.30)
 
+###Embedded configuration
+
+There is an option to skip DB/App Server configuration and start application using `H2` and `Jetty Runner`:
+
+    mvn clean package
+    mvn -Dspring.profiles.active=h2 jetty:run
+
 ##API Usage. Users
 
 API protected with `Basic Authentication`. There are two default users in database created for you: admin/123 и user/123.
@@ -54,7 +61,7 @@ If it is after 11:00 and user has already voted then 422 status will be returned
 
 **Delete** user:
 
-    $ curl --user admin:123 -X DELETE http://localhost:8080/users/1
+    curl --user admin:123 -X DELETE http://localhost:8080/users/1
 
 ###Restaurants
 

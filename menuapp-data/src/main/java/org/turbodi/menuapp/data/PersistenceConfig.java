@@ -6,7 +6,6 @@ import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -36,7 +35,6 @@ public class PersistenceConfig {
         return flyway;
     }
 
-    @Profile("default")
     @Bean
     public DataSource dataSource(Environment env) {
         BasicDataSource dataSource = new BasicDataSource();
