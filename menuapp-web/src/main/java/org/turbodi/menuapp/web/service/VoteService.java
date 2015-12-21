@@ -12,6 +12,8 @@ import org.turbodi.menuapp.web.dto.RestaurantDto;
 
 import java.time.LocalTime;
 
+import static org.turbodi.menuapp.web.service.Checkers.nonNull;
+
 /**
  * @author Dmitriy Borisov
  * @created 12/20/2015
@@ -28,7 +30,7 @@ public class VoteService extends RestaurantToDtoAware {
 
     @Transactional
     public RestaurantDto vote(Long restaurantId, User user) {
-        Restaurant restaurant = restaurantDao.findOne(restaurantId);
+        Restaurant restaurant = nonNull(restaurantDao.findOne(restaurantId));
         user.setVotedFor(restaurant);
         userDao.save(user);
         return toDtoCountRefresh(restaurant);

@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.turbodi.menuapp.web.service.Checkers;
 
 /**
  * @author Dmitriy Borisov
@@ -22,6 +23,11 @@ public abstract class AbstractController {
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<String> onAccessDenied() {
         return new ResponseEntity<>("Access is denied", HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(Checkers.NotFoundException.class)
+    public ResponseEntity<?> onNotFound() {
+        return ResponseEntity.notFound().build();
     }
 
     @ExceptionHandler

@@ -11,6 +11,8 @@ import org.turbodi.menuapp.web.dto.RestaurantDto;
 
 import java.util.List;
 
+import static org.turbodi.menuapp.web.service.Checkers.nonNull;
+
 /**
  * @author Dmitriy Borisov
  * @created 12/18/2015
@@ -36,19 +38,19 @@ public class RestaurantService extends RestaurantToDtoAware {
 
     @Transactional(readOnly = true)
     public RestaurantDto findOne(Long id) {
-        return toDtoCountRefresh(restaurantDao.findOne(id));
+        return toDtoCountRefresh(nonNull(restaurantDao.findOne(id)));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     public RestaurantDto update(Long id, RestaurantDto dto) {
-        Restaurant restaurant = restaurantDao.findOne(id);
+        Restaurant restaurant = nonNull(restaurantDao.findOne(id));
         restaurant.setName(dto.getName());
         return toDtoCountRefresh(restaurantDao.save(restaurant));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     public void delete(Long id) {
-        Restaurant restaurant = restaurantDao.findOne(id);
+        Restaurant restaurant = nonNull(restaurantDao.findOne(id));
         restaurant.setDeleted(true);
         restaurantDao.save(restaurant);
     }

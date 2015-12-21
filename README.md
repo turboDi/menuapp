@@ -57,6 +57,8 @@ If it is after 11:00 and user has already voted then 422 status will be returned
 
 ##API Usage. Admins
 
+All `USER` API is available for `ADMIN` user (except voting)
+
 ###Users
 
 **Delete** user:

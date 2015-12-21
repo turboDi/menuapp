@@ -17,6 +17,8 @@ import org.turbodi.menuapp.web.dto.MenuDto;
 import java.util.Date;
 import java.util.List;
 
+import static org.turbodi.menuapp.web.service.Checkers.nonNull;
+
 /**
  * @author Dmitriy Borisov
  * @created 12/18/2015
@@ -45,7 +47,7 @@ public class MenuService {
 
     public MenuDto create(Long restaurantId, MenuDto dto) {
         Menu menu = new Menu();
-        menu.setRestaurant(restaurantDao.findOne(restaurantId));
+        menu.setRestaurant(nonNull(restaurantDao.findOne(restaurantId)));
         for (DishDto dish: dto.getDishes()) {
             addDish(menu, dish);
         }
@@ -55,16 +57,16 @@ public class MenuService {
     @PreAuthorize("isAuthenticated()")
     @Transactional(readOnly = true)
     public MenuDto findToday(Long restaurantId) {
-        return TO_DTO.apply(menuDao.findByRestaurantIdAndDate(restaurantId, new Date()));
+        return TO_DTO.apply(nonNull(menuDao.findByRestaurantIdAndDate(restaurantId, new Date())));
     }
 
     @Transactional(readOnly = true)
     public MenuDto findOne(Long id) {
-        return TO_DTO.apply(menuDao.findOne(id));
+        return TO_DTO.apply(nonNull(menuDao.findOne(id)));
     }
 
     public MenuDto update(Long id, MenuDto dto) {
-        Menu menu = menuDao.findOne(id);
+        Menu menu = nonNull(menuDao.findOne(id));
         menu.getDishes().clear();
         for (DishDto dish: dto.getDishes()) {
             addDish(menu, dish);
@@ -77,7 +79,7 @@ public class MenuService {
     }
 
     private void addDish(Menu menu, DishDto dto) {
-        Dish dish = dto.getId() != null ? dishDao.findOne(dto.getId()) : new Dish();
+        Dish dish = dto.getId() != null ? nonNull(dishDao.findOne(dto.getId())) : new Dish();
         dish.setName(dto.getName());
         dish.setPrice(dto.getPrice());
         menu.getDishes().add(dish);
