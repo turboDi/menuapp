@@ -16,7 +16,7 @@ This is a voting system for deciding where to have lunch.
 
 ###Startup
 
-Launch menuapp-web\target\menuapp-web-0.0.1-SNAPSHOT.war using your app server (I've used tomcat 8.0.30)
+Launch menuapp-web\target\menuapp-web-0.0.1.war using your app server (I've used tomcat 8.0.30)
 
 ###Embedded configuration
 
