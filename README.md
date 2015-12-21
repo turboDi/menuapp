@@ -23,7 +23,7 @@ Launch menuapp-web\target\menuapp-web-0.0.1-SNAPSHOT.war using your app server (
 There is an option to skip DB/App Server configuration and start application using `H2` and `Jetty Runner`:
 
     mvn clean package
-    mvn -Dspring.profiles.active=h2 jetty:run
+    mvn -Dspring.profiles.active=h2 jetty:run-war
 
 ##API Usage. Users
 
